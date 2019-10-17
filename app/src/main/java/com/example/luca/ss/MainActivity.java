@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
     RecyclerViewAdapter recyclerAdapter;
     boolean firstStart;
 
+    //file modificato
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
