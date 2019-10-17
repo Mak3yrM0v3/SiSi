@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SìSì</string>
+    <string name="about_name">About</string>
+    <string name="about">Questa applicazione è stata creata puramente a scopo di lucro\n e NON per scopi didattici.</string>
+
+   <string name="about_nb"> N.B. VIETATA ai cinesi e indiani per motivi raziali.</string>
+
+    <string-array name="spinner_items">
+        <item>1</item>
+        <item>2</item>
+        <item>10</item>
+        <item>50</item>
+    </string-array>
+</resources>
