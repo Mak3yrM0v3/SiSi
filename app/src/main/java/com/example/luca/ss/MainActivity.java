@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
     RecyclerViewAdapter recyclerAdapter;
     boolean firstStart;
 
-    //file modificato
 
 
     @Override
