@@ -15,10 +15,6 @@
 
     </item>
     <item
-        android:id="@+id/set_ip"
-        android:title="set ip"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/export_item"
         android:title="export" />
     <item
@@ -26,6 +22,10 @@
         android:checkable="false"
         android:title="show database"
         app:actionLayout="@layout/switch_item" />
+    <item
+        android:id="@+id/settings"
+        android:title="Setttings"
+        app:showAsAction="never" />
     <item
         android:id="@+id/about"
         android:title="about"

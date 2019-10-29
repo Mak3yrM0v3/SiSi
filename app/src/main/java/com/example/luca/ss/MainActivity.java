@@ -41,9 +41,8 @@ public class MainActivity extends AppCompatActivity{
     Spinner spinner;
     TextView textView;
     String itemSelected;
-    Button siButton, setIpButton;
+    Button siButton;
     Switch appBarSwitch;
-    EditText ipEditText;
     boolean tVMode;
     String val,ip;
     SharedPreferences.Editor edit;
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity{
     DatabaseHelper helper;
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerAdapter;
-    boolean firstStart;
 
 
 
@@ -63,17 +61,14 @@ public class MainActivity extends AppCompatActivity{
         spinner= findViewById(R.id.spinner);
         textView = findViewById(R.id.textView);
         siButton =findViewById(R.id.button);
-        setIpButton = findViewById(R.id.set_ip);
-        ipEditText = findViewById(R.id.ip_editText);
         recyclerView = findViewById(R.id.recyclerView);
 
         prefs = getSharedPreferences("prefs",0);
         edit = prefs.edit();
 
         ip= prefs.getString("ip","0.0.0.0");
-        firstStart=prefs.getBoolean("firstStart",true);
 
-        if (firstStart){onFirstStart();}
+        if (prefs.getBoolean("firstStart",true)){onFirstStart();}
 
         helper = new DatabaseHelper(this);
         recyclerAdapter = new RecyclerViewAdapter(helper.getData());
@@ -104,12 +99,7 @@ public class MainActivity extends AppCompatActivity{
                 send("http://"+ip+"/W="+itemSelected);
             }
         });
-        setIpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setIp(v);
-            }
-        });
+
         tVMode=false;
 
         spinner.setSelection(prefs.getInt("spinner",0));
@@ -121,6 +111,17 @@ public class MainActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu,menu);
+
+        MenuItem db=menu.findItem(R.id.database_switch);
+        if (prefs.getBoolean("dbOnStart",false)){
+            helper.updateRecycler();
+            db.setTitle("Nascondi Database");
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            db.setTitle("Mostra Database");
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+
         return true;
     }
 
@@ -147,23 +148,23 @@ public class MainActivity extends AppCompatActivity{
             case R.id.about:
                 startActivity(new Intent(this,AboutActvity.class));
                 break;
-            case R.id.set_ip:
-                ipEditText.setText(prefs.getString("ip",""));
-                ipEditText.setVisibility(View.VISIBLE);
-                setIpButton.setVisibility(View.VISIBLE);
-                break;
             case R.id.database_switch:
                 if (recyclerView.getVisibility()==View.VISIBLE){
                     recyclerView.setVisibility(View.INVISIBLE);
-                    item.setTitle("show database");
+                    item.setTitle("Mostra database");
                 } else {
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerAdapter.setData(helper.getData());
-                    item.setTitle("hide database");
+                    helper.updateRecycler();
+                    item.setTitle("Nascondi database");
                 }
                 break;
             case R.id.export_item:
                 Utils.export(this);
+                break;
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
         }
         return true;
     }
@@ -210,18 +211,6 @@ public class MainActivity extends AppCompatActivity{
         new InvioDati().execute(url);
     }
 
-    public void setIp(View view){
-        ip=ipEditText.getText().toString();
-        edit.putString("ip",ip);
-        edit.apply();
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-
-        setIpButton.setVisibility(View.INVISIBLE);
-        ipEditText.setVisibility(View.INVISIBLE);
-        Toast.makeText(this,"new ip: "+ip,Toast.LENGTH_LONG).show();
-    }
-
     public String formatta(String s){
         boolean added = false;
         if (!s.equals( "FFFFFFFFFFFFFFFF"))
@@ -234,8 +223,6 @@ public class MainActivity extends AppCompatActivity{
         textView.setText("device not connected");
 
         }else {
-            Log.d("PROVA", result);
-
             val=result;
             textView.setText(formatta(result));
             siButton.setEnabled(true);

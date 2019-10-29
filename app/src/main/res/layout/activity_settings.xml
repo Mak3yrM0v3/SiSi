@@ -6,4 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <EditText
+        android:id="@+id/ipSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="8"
+        android:hint="0.0.0.0"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/setIp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Set"
+        app:layout_constraintBottom_toBottomOf="@+id/ipSetting"
+        app:layout_constraintStart_toEndOf="@+id/ipSetting"
+        app:layout_constraintTop_toTopOf="@+id/ipSetting" />
+
+    <EditText
+        android:id="@+id/userSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="6"
+        android:hint="user"
+        android:inputType="textPersonName"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ipSetting"
+        app:layout_constraintStart_toStartOf="@+id/ipSetting"
+        app:layout_constraintTop_toBottomOf="@+id/ipSetting" />
+
+    <Button
+        android:id="@+id/setUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        app:layout_constraintStart_toStartOf="@+id/setIp"
+        app:layout_constraintTop_toTopOf="@+id/userSettings" />
+
+    <TextView
+        android:id="@+id/databaseTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Mostra il database \nall'avvio"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/userSettings"
+        app:layout_constraintStart_toStartOf="@+id/userSettings"
+        app:layout_constraintTop_toBottomOf="@+id/userSettings" />
+
+    <Switch
+        android:id="@+id/dbSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/databaseTV"
+        app:layout_constraintEnd_toEndOf="@+id/setUser"
+        app:layout_constraintStart_toStartOf="@+id/setUser"
+        app:layout_constraintTop_toBottomOf="@+id/userSettings" />
+
 </android.support.constraint.ConstraintLayout>

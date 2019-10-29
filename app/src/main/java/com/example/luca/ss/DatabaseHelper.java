@@ -27,7 +27,7 @@ public class DatabaseHelper{
     private static int size;
 
     public DatabaseHelper(Context context) {
-        new AsyncGet().execute("SELECT "+ COL1 +","+ COL2 +", "+COL3+" FROM "+TABLE_NAME);
+        new AsyncGet().execute();
         new AsyncSize().execute();
         SharedPreferences prefs = context.getSharedPreferences("prefs",0);
         USER = prefs.getString("user","undefined");
@@ -40,9 +40,7 @@ public class DatabaseHelper{
     }
 
     public ArrayList<Element> getData(){
-        String query = "SELECT "+ COL1 +","+ COL2 +", "+COL3+" FROM "+TABLE_NAME;
         ArrayList<Element> array = new ArrayList<>();
-        new AsyncGet().execute(query);
         try {
             while (set.next()) {
                 Element temp = new Element(set.getString(COL1), set.getString(COL2), set.getString(COL3));
@@ -52,6 +50,10 @@ public class DatabaseHelper{
             e.printStackTrace();
         }
         return array;
+    }
+
+    public void updateRecycler(){
+        new AsyncUpdateRecycler().execute();
     }
 
     public int size(){
@@ -65,11 +67,11 @@ public class DatabaseHelper{
 
 
 
-    static class AsyncGet extends AsyncTask<String, Void, ResultSet> {
+    static class AsyncGet extends AsyncTask<Void, Void, ResultSet> {
 
         @Override
-        protected ResultSet doInBackground(String ... strings) {
-            String query = strings[0];
+        protected ResultSet doInBackground(Void ... strings) {
+            String query = "SELECT "+ COL1 +","+ COL2 +", "+COL3+" FROM "+TABLE_NAME;
             ResultSet set = null;
 
             try {
@@ -133,6 +135,32 @@ public class DatabaseHelper{
         @Override
         protected void onPostExecute(Integer set) {
             size=set;
+        }
+    }
+    class AsyncUpdateRecycler extends AsyncTask<Void, Void, ResultSet> {
+
+        @Override
+        protected ResultSet doInBackground(Void ... strings) {
+            String query = "SELECT "+ COL1 +","+ COL2 +", "+COL3+" FROM "+TABLE_NAME;
+            ResultSet set = null;
+
+            try {
+                Class.forName(myDriver);
+                Connection conn = DriverManager.getConnection(myUrl, "105129", "lucasisi99");
+                Statement st = conn.createStatement();
+                set = st.executeQuery(query);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return set;
+
+        }
+
+        @Override
+        protected void onPostExecute(ResultSet set) {
+            DatabaseHelper.set = set;
+            MainActivity mainActivity = (MainActivity) context;
+            mainActivity.recyclerAdapter.setData(getData());
         }
     }
 

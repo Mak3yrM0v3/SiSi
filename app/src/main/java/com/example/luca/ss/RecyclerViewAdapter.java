@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private ArrayList<Element> data;
+    private static ArrayList<Element> data;
 
     public RecyclerViewAdapter(ArrayList<Element> data){
         this.data=data;
@@ -28,8 +28,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
         String code = data.get(i).getCode();
         String value = data.get(i).getValue();
+        String user = data.get(i).getUser();
         viewHolder.code.setText(code);
         viewHolder.value.setText(value);
+        viewHolder.user.setText(user);
     }
 
     public void setData(ArrayList<Element> data){
@@ -44,12 +46,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        protected TextView value, code;
+        protected TextView value, code, user;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             value = itemView.findViewById(R.id.item_value);
             code = itemView.findViewById(R.id.item_code);
+            user= itemView.findViewById(R.id.item_user);
         }
     }
 }
