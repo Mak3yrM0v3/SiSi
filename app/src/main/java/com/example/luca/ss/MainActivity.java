@@ -215,13 +215,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
     public String formatta(String s){
         boolean added = false;
         if (!s.equals( "FFFFFFFFFFFFFFFF"))
-            added = helper.AddData(new Element(s,Utils.format(s,false)));
-        if (added){
-            Toast.makeText(this,"Aggiunto al database: "+Utils.format(s,false),Toast.LENGTH_LONG).show();
-            recyclerAdapter.setData(helper.getData());
-        } else{
-            Toast.makeText(this,"Non Aggiunto al database",Toast.LENGTH_LONG).show();
-        }
+            helper.AddData(new Element(s,Utils.format(s,false)));
         return Utils.format(s,tVMode);
     }
 
