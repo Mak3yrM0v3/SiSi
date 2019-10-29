@@ -7,28 +7,13 @@ public class Element {
     private String value;
     private String user;
 
-    public Element(String code,String value) throws IllegalArgumentException{
-        if (code == null) throw new IllegalArgumentException();
-        if (value == null) throw new IllegalArgumentException();
-
-        this.code = code;
-        this.value=value;
-        this.user="undefined";
-    }
-    public Element(String code) throws IllegalArgumentException{
-        if (code == null) throw new IllegalArgumentException();
-
-        this.code = code;
-        this.value=Utils.format(code,true);
-        this.user="undefined";
-    }
     public Element(String code,String value,String user) throws IllegalArgumentException{
         if (code == null) throw new IllegalArgumentException();
-        if (value == null) throw new IllegalArgumentException();
+        if (value == null || value.equals("")) this.value=Utils.format(code,false);
+        else this.value=value;
         if (user == null) throw new IllegalArgumentException();
 
         this.code = code;
-        this.value=value;
         this.user=user;
     }
 

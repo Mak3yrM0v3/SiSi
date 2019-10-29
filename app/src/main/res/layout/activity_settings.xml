@@ -7,6 +7,18 @@
     tools:context=".SettingsActivity">
 
     <EditText
+        android:id="@+id/newValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:ems="5"
+        android:hint="0.00"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/newCode" />
+
+    <EditText
         android:id="@+id/ipSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,10 +46,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:ems="6"
+        android:ems="8"
         android:hint="user"
         android:inputType="textPersonName"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/ipSetting"
         app:layout_constraintStart_toStartOf="@+id/ipSetting"
         app:layout_constraintTop_toBottomOf="@+id/ipSetting" />
@@ -70,5 +82,48 @@
         app:layout_constraintEnd_toEndOf="@+id/setUser"
         app:layout_constraintStart_toStartOf="@+id/setUser"
         app:layout_constraintTop_toBottomOf="@+id/userSettings" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="370dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="285dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/newCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="112dp"
+        android:ems="10"
+        android:hint="0123456789ABCDEF"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/databaseTV" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="€"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCode" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="Aggiungi"
+        app:layout_constraintStart_toEndOf="@+id/newValue"
+        app:layout_constraintTop_toBottomOf="@+id/newCode" />
 
 </android.support.constraint.ConstraintLayout>

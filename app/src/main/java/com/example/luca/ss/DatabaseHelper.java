@@ -34,7 +34,7 @@ public class DatabaseHelper{
         this.context=context;
     }
 
-    public void AddData(@NonNull Element element) {
+    public void addData(@NonNull Element element) {
         String query = "INSERT INTO "+TABLE_NAME+" (`"+ COL1 +"`,`"+ COL2 +"`,`"+ COL3 +"`) VALUES ('"+element.getCode()+"', '"+element.getValue()+"', '"+USER+"')";
         new AsyncAdd().execute(query);
     }
@@ -110,7 +110,11 @@ public class DatabaseHelper{
 
         @Override
         protected void onPostExecute(Boolean set) {
-            displayMessage(set.toString());
+            if (set){
+                displayMessage("Aggiunto al database");
+            } else {
+                displayMessage("Non aggiunto al database");
+            }
         }
     }
     class AsyncSize extends AsyncTask<Void, Void, Integer> {

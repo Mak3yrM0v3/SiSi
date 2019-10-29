@@ -16,7 +16,7 @@
     </item>
     <item
         android:id="@+id/export_item"
-        android:title="export" />
+        android:title="Esporta" />
     <item
         android:id="@+id/database_switch"
         android:checkable="false"
@@ -24,11 +24,11 @@
         app:actionLayout="@layout/switch_item" />
     <item
         android:id="@+id/settings"
-        android:title="Setttings"
+        android:title="Impostazioni"
         app:showAsAction="never" />
     <item
         android:id="@+id/about"
-        android:title="about"
+        android:title="Altro"
         app:showAsAction="never" />
 
 </menu>

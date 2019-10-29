@@ -13,11 +13,12 @@ import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    EditText ipEditText, userEditText;
-    Button ipButton, userButton;
+    EditText ipEditText, userEditText, codeEdit, valueEdit;
+    Button ipButton, userButton, addButton;
     Switch dbSwitch;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
+    DatabaseHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,13 @@ public class SettingsActivity extends AppCompatActivity {
         ipButton=findViewById(R.id.setIp);
         userButton=findViewById(R.id.setUser);
         dbSwitch=findViewById(R.id.dbSwitch);
+        valueEdit=findViewById(R.id.newValue);
+        codeEdit=findViewById(R.id.newCode);
+        addButton=findViewById(R.id.addButton);
 
         prefs=getSharedPreferences("prefs",0);
+
+        helper = new DatabaseHelper(this);
 
         init();
     }
@@ -60,6 +66,19 @@ public class SettingsActivity extends AppCompatActivity {
                 edit.apply();
             }
         });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add();
+            }
+        });
+    }
+
+    public void add(){
+        Element element = new Element(codeEdit.getText().toString(),
+                    valueEdit.getText().toString(),
+                    prefs.getString("user", "undefined"));
+        helper.addData(element);
     }
 
     public void setIp(View view){
