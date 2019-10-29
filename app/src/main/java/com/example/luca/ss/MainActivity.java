@@ -1,8 +1,10 @@
 package com.example.luca.ss;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +28,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements TaskCompleted{
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class MainActivity extends AppCompatActivity{
 
     Spinner spinner;
     TextView textView;
@@ -197,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
     public void send(String url){
         textView.setText("connecting...");
         siButton.setEnabled(false);
-        new InvioDati(this).execute(url);
+        new InvioDati().execute(url);
     }
 
     public void setIp(View view){
@@ -219,7 +229,6 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
         return Utils.format(s,tVMode);
     }
 
-    @Override
     public void onTaskComplete(String result) {
         if (result == null){
         textView.setText("device not connected");
@@ -230,6 +239,47 @@ public class MainActivity extends AppCompatActivity implements TaskCompleted{
             val=result;
             textView.setText(formatta(result));
             siButton.setEnabled(true);
+        }
+    }
+
+    class InvioDati extends AsyncTask<String,Void,String> {
+
+        private URL urlPagina;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                urlPagina = new URL(strings[0]);
+                HttpURLConnection conn = (HttpURLConnection) urlPagina.openConnection();
+                conn.setConnectTimeout(5000);
+
+                InputStream risposta = conn.getInputStream();
+                String dati = serverRead(risposta);
+                return  dati;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            onTaskComplete(s);
+        }
+
+        private String serverRead(InputStream in){
+            StringBuilder sb = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+                String nextLine = "";
+                while ((nextLine = reader.readLine()) != null) {
+                    sb.append(nextLine);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb.toString();
         }
     }
 }
