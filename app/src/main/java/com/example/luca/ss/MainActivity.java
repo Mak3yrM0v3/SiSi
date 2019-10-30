@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerAdapter;
 
-
+//sono un cameriere figo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
